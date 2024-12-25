@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surah Tracker</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: transparent; /* Transparent background outside the widget */
+    }
+
+    .tracker {
+      background-color: #ad937c; /* Rectangle background color */
+      border-radius: 15px;
+      width: 300px; /* Fixed width */
+      padding: 20px;
+      text-align: center;
+      color: white;
+      font-family: Arial, sans-serif;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .tracker h1 {
+      margin: 0 0 20px 0;
+      font-size: 24px;
+    }
+
+    .tracker .number-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .tracker .number {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .tracker .arrow {
+      font-size: 18px; /* Arrow size */
+      color: gray;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 25px;
+      border: 1px solid gray;
+      border-radius: 50%;
+    }
+
+    .tracker .arrow.disabled {
+      color: lightgray;
+      border-color: lightgray;
+      cursor: not-allowed;
+    }
+
+    .tracker .arrow:hover:not(.disabled) {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="tracker">
+    <h1>Surah Tracker</h1>
+    <div class="number-container">
+      <div class="arrow" id="decrease">&#9660;</div> <!-- Down arrow -->
+      <span class="number" id="number">0</span>
+      <div class="arrow" id="increase">&#9650;</div> <!-- Up arrow -->
+    </div>
+  </div>
+
+  <script>
+    const numberElement = document.getElementById('number');
+    const decreaseButton = document.getElementById('decrease');
+    const increaseButton = document.getElementById('increase');
+
+    let currentNumber = 0; // Start at 0
+    const minNumber = 0;   // Minimum Surah number
+    const maxNumber = 114; // Maximum Surah number
+
+    // Update the number display
+    function updateNumber() {
+      numberElement.textContent = currentNumber;
+
+      // Disable or enable the buttons based on the current number
+      decreaseButton.classList.toggle('disabled', currentNumber <= minNumber);
+      increaseButton.classList.toggle('disabled', currentNumber >= maxNumber);
+    }
+
+    // Decrease the number
+    decreaseButton.addEventListener('click', () => {
+      if (currentNumber > minNumber) {
+        currentNumber--;
+        updateNumber();
+      }
+    });
+
+    // Increase the number
+    increaseButton.addEventListener('click', () => {
+      if (currentNumber < maxNumber) {
+        currentNumber++;
+        updateNumber();
+      }
+    });
+
+    // Initial update
+    updateNumber();
+  </script>
+</body>
+</html>
